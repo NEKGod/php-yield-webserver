@@ -2,7 +2,6 @@
 /**
  * 代码来自：https://www.laruence.com/2015/05/28/3038.html
  */
-require "core/coroutines/Task.php";
 require "core/coroutines/Scheduler.php";
 
 function server($port) {

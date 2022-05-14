@@ -5,7 +5,7 @@ require_once "./core/socket/SocketListen.php";
 set_time_limit(0);
 ini_set("memory_limit", '1024M');
 
-$ip = '0.0.0.0';
+$ip = '127.0.0.1';
 $port = 1935;
 $socketListen = new SocketListen($ip, $port);
 
