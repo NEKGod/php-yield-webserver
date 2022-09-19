@@ -51,7 +51,7 @@ class Scheduler
      * @param Generator $coroutine
      * @return int
      */
-    public function newTask(Generator $coroutine)
+    public function newTask(Generator $coroutine): int
     {
         $tid = ++$this->maxTaskId;
         $task = new Task($tid, $coroutine);
@@ -75,7 +75,7 @@ class Scheduler
      * @param $tid
      * @return bool
      */
-    public function killTask($tid)
+    public function killTask($tid): bool
     {
         if (!isset($this->taskMap[$tid])) {
             return false;
@@ -115,7 +115,7 @@ class Scheduler
         }
     }
 
-    protected function ioPollTask()
+    protected function ioPollTask(): Generator
     {
         while (true) {
             if ($this->taskQueue->isEmpty()) {

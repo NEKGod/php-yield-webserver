@@ -5,7 +5,8 @@ use core\coroutines\CoSocket;
 use core\coroutines\Scheduler;
 
 
-function server($port) {
+function server($port): Generator
+{
     echo "Starting server at port $port...\n";
     $socket = @stream_socket_server("tcp://0.0.0.0:$port", $errNo, $errStr);
     if (!$socket) throw new Exception($errStr, $errNo);
@@ -22,7 +23,8 @@ function server($port) {
  * @param CoSocket $socket
  * @return \Generator
  */
-function handleClient(CoSocket $socket) {
+function handleClient(CoSocket $socket): Generator
+{
     $data = (yield $socket->read(8192));
     $msg = "Received following request:\n\n";
     $msgLength = strlen($msg);
