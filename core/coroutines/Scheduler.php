@@ -1,8 +1,8 @@
 <?php
-require "SystemCall.php";
-require "Task.php";
-require "CoSocket.php";
-require "CoroutineReturnValue.php";
+namespace core\coroutines;
+
+use Generator;
+use SplQueue;
 
 /**
  * 系统任务调度器
@@ -140,7 +140,7 @@ class Scheduler
 //        var_dump($rSocks);
 //        var_dump($wSocks);
         $eSocks = []; // dummy
-        if (!@stream_select($rSocks, $wSocks, $eSocks, $timeout)) {
+        if (!stream_select($rSocks, $wSocks, $eSocks, $timeout)) {
             return;
         }
         foreach ($rSocks as $socket) {

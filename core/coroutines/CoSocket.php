@@ -1,4 +1,5 @@
 <?php
+namespace core\coroutines;
 
 class CoSocket
 {

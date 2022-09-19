@@ -1,8 +1,9 @@
 <?php
-/**
- * 代码来自：https://www.laruence.com/2015/05/28/3038.html
- */
-require "core/coroutines/Scheduler.php";
+require_once "vendor/autoload.php";
+
+use core\coroutines\CoSocket;
+use core\coroutines\Scheduler;
+
 
 function server($port) {
     echo "Starting server at port $port...\n";
@@ -16,9 +17,14 @@ function server($port) {
         );
     }
 }
-function handleClient($socket) {
+
+/**
+ * @param CoSocket $socket
+ * @return \Generator
+ */
+function handleClient(CoSocket $socket) {
     $data = (yield $socket->read(8192));
-    $msg = "Received following request:\n\n$data";
+    $msg = "Received following request:\n\n";
     $msgLength = strlen($msg);
     $response = <<<res
 HTTP/1.1 200 OK
@@ -26,10 +32,16 @@ Content-Type: text/html
 
 $msg
 res;
+    var_dump($response) ;
     yield $socket->write($response);
     yield $socket->close();
 }
 $scheduler = new Scheduler;
-$scheduler->newTask(server(8000));
-/** @noinspection PhpUnreachableStatementInspection */
-$scheduler->run();
+try {
+    $scheduler->newTask(server(8000));
+    /** @noinspection PhpUnreachableStatementInspection */
+    $scheduler->run();
+} catch (Exception $e) {
+
+}
+

@@ -1,4 +1,8 @@
 <?php
+namespace core\coroutines;
+
+use Generator;
+use SplStack;
 
 /**
  * 任务类
@@ -42,36 +46,8 @@ class Task
      * 任务是否已结束
      * @return bool
      */
-    public function isFinished()
+    public function isFinished(): bool
     {
         return !$this->coroutine->valid();
-    }
-}
-
-/**
- * 协程堆栈
- * @param Generator $gen
- * @return Generator|void
- */
-function stackedCoroutine(Generator $gen)
-{
-    $stack = new SplStack;
-    for (; ;) {
-        $value = $gen->current();
-        if ($value instanceof Generator) {
-            $stack->push($gen);
-            $gen = $value;
-            continue;
-        }
-        $isReturnValue = $value instanceof CoroutineReturnValue;
-        if (!$gen->valid() || $isReturnValue) {
-            if ($stack->isEmpty()) {
-                return;
-            }
-            $gen = $stack->pop();
-            $gen->send($isReturnValue ? $value->getValue() : NULL);
-            continue;
-        }
-        $gen->send(yield $gen->key() => $value);
     }
 }

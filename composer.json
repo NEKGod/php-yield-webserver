@@ -1,0 +1,16 @@
+{
+    "name": "php/php-yield-webserver",
+    "authors": [
+        {
+            "name": "nekgod",
+            "email": "1559096467@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "core\\": "core/"
+        },
+        "files": ["core/common.php"]
+    },
+    "require": {}
+}
